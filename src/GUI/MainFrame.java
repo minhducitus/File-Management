@@ -101,12 +101,12 @@ public class MainFrame {
         leftPanel = new JPanel();
         leftPanel.setLayout(new BorderLayout(0,5));
 
-        fileManagerScrollPane = new JScrollPane(fileManagerTree);
         fileManagerTree = new JTree();
+        fileManagerScrollPane = new JScrollPane(fileManagerTree);
         fileManagerTree.setModel(new FilesContentProvider("C:\\Users\\Admin\\Desktop\\ProjectTest"));
-        fileManagerTree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
+        fileManagerTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         fileManagerScrollPane.setViewportView(fileManagerTree);
-        leftPanel.add(fileManagerTree, BorderLayout.CENTER);
+        leftPanel.add(fileManagerScrollPane, BorderLayout.CENTER);
 
         rightPanel = new JPanel();
         rightPanel.setLayout(new GridLayout(1, 1, 25, 0));
@@ -127,23 +127,6 @@ public class MainFrame {
     }
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
-
-//        try {
-//            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//        } catch (UnsupportedLookAndFeelException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         EventQueue.invokeLater(new Runnable() {
             @Override

@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
 public class MainFrame {
@@ -19,6 +20,12 @@ public class MainFrame {
     private JMenuItem createFolderItem;
     private JMenuItem deleteFolderItem;
     private JMenuItem renameFolderItem;
+    private JPanel leftPanel;
+    private JPanel rightPanel;
+    private JPanel centerPanel;
+    private JTree fileManagerTree;
+    private JScrollPane fileManagerScrollPane;
+    private JTextArea fileContentTextArea;
 
 
     public MainFrame() {
@@ -91,28 +98,53 @@ public class MainFrame {
         jMenuBar.add(fileMenu);
         jMenuBar.add(folderMenu);
 
+        leftPanel = new JPanel();
+        leftPanel.setLayout(new BorderLayout(0,5));
+
+        fileManagerScrollPane = new JScrollPane(fileManagerTree);
+        fileManagerTree = new JTree();
+        fileManagerTree.setModel(new FilesContentProvider("C:\\Users\\Admin\\Desktop\\ProjectTest"));
+        fileManagerTree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
+        fileManagerScrollPane.setViewportView(fileManagerTree);
+        leftPanel.add(fileManagerTree, BorderLayout.CENTER);
+
+        rightPanel = new JPanel();
+        rightPanel.setLayout(new GridLayout(1, 1, 25, 0));
+
+        fileContentTextArea = new JTextArea();
+        fileContentTextArea.setPreferredSize(new Dimension(800, 500));
+        fileContentTextArea.setEditable(false);
+        rightPanel.add(fileContentTextArea);
+
+        centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.LINE_AXIS));
+        centerPanel.add(leftPanel);
+        centerPanel.add(Box.createRigidArea(new Dimension(15, 5)));
+        centerPanel.add(rightPanel);
+
         jFrame.setJMenuBar(jMenuBar);
+        jFrame.getContentPane().add(centerPanel);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
 
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+//        try {
+//            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (UnsupportedLookAndFeelException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
